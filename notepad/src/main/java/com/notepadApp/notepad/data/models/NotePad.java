@@ -19,9 +19,7 @@ public class NotePad {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    private String username;
-    private String password;
     private boolean isLocked;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<NotePage> pages;
+    private List<Entry> entries;
 }

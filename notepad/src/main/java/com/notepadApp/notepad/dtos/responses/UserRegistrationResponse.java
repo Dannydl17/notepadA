@@ -6,5 +6,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class UserRegistrationResponse {
-      private Long id;
+    private Long id;
+    private Long notepad;
 }

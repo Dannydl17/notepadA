@@ -12,11 +12,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String userName;
-    private String phoneNumber;
-    private String email;
-    private String passWord;
+    private String username;
+    private String password;
     private LocalDateTime localDateTime = LocalDateTime.now();
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private NotePad notePad;
+    private NotePad notePad = new NotePad();
 }

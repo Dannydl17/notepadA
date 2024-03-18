@@ -1,14 +1,12 @@
 package com.notepadApp.notepad.data.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -17,11 +15,10 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class NotePage {
+public class Entry {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String title;
     private String body;
-    private LocalDateTime localDateTime;
 }

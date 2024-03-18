@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class LoginResponse {
-    private String message;
+public class EntryResponse {
+    private Long id;
 }
