@@ -10,8 +10,6 @@ import com.notepadApp.notepad.exceptions.InvalidUserEmailException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @AllArgsConstructor
 public class AppUserService implements  UserService{
@@ -23,7 +21,6 @@ public class AppUserService implements  UserService{
         user.setEmail(request.getEmail());
         user.setPassWord(request.getPassword());
 
-        userRepository.save(user);
         User savedUser = userRepository.save(user);
 
         UserRegistrationResponse response = new UserRegistrationResponse();
@@ -33,15 +30,14 @@ public class AppUserService implements  UserService{
 
     @Override
     public LoginResponse login(UserLoginRequest loginRequest) {
-         LoginResponse response = new LoginResponse();
-           List<User> user = userRepository.findAll();
-            if (user.equals(loginRequest.getEmail())) {
+        LoginResponse response = new LoginResponse();
+        User user = userRepository.findByEmail(loginRequest.getEmail());
+        if (user != null) {
+            if (user.getEmail().equals(loginRequest.getEmail())) {
                 response.setMessage("You have successfully login");
                 return response;
             }
-            throw new InvalidUserEmailException("Email incorrect");
         }
-//           User user = userRepository.findByEmail(loginRequest.getEmail());
-
+        throw new InvalidUserEmailException("Email incorrect");
     }
 }
