@@ -25,11 +25,12 @@ public class EntryServiceTest {
     @Test
     public void testThatNotePadCanBeCreateEntryTest(){
         EntryCreateRequest request = new EntryCreateRequest();
-        request.setId(1L);
         request.setTitle("My first day at school");
         request.setBody("I was in school on Monday");
 
-        EntryResponse response = entryService.createEntry(request);
+        entryService.createEntry(request);
+
+
     }
 
 }

@@ -6,5 +6,5 @@ import lombok.Setter;
 @Setter
 @Getter
 public class EntryResponse {
-    private Long id;
+    private ;
 }

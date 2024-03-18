@@ -18,15 +18,11 @@ public class AppEntryService implements EntryService{
     private final EntryRepository entryRepository;
 
     @Override
-    public EntryResponse createEntry(EntryCreateRequest request) {
+    public Entry createEntry(EntryCreateRequest request) {
         Entry entry = new Entry();
         entry.setTitle(request.getTitle());
         entry.setBody(request.getBody());
         Entry savedEntry = entryRepository.save(entry);
-        List<Entry> entries =
-
-
-
-        return null;
+        return savedEntry;
     }
 }

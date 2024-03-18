@@ -28,4 +28,20 @@ public class AppUserService implements  UserService{
         response.setNotepad(notePad.getId());
         return response;
     }
+
+    @Override
+    public void write(Long id, Long notepad, String title, String body) {
+        User user = findById(id);
+        notePadService.write(notepad, title, body);
+    }
+
+    @Override
+    public NotePad getNotepad(Long id, Long notepad) {
+        User user = findById(id);
+        return notePadService.findNotepad(notepad);
+    }
+
+    private User findById(Long id) {
+       return userRepository.findById(id).get();
+    }
 }
