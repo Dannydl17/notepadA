@@ -10,4 +10,6 @@ public interface UserService {
     void write(Long id, Long notepad, String title, String body);
 
     NotePad getNotepad(Long id, Long findNotePadId);
+
+    void delete(Long id, Long notepad, String title, String body);
 }

@@ -41,6 +41,12 @@ public class AppUserService implements  UserService{
         return notePadService.findNotepad(notepad);
     }
 
+    @Override
+    public void delete(Long id, Long notepad, String title, String body) {
+        User user = findById(id);
+        notePadService.delete(notepad, title, body);
+    }
+
     private User findById(Long id) {
        return userRepository.findById(id).get();
     }

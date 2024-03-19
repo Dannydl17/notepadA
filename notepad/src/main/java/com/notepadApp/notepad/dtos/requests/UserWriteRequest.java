@@ -10,5 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserWriteRequest {
-
+    private Long id;
+    private Long notepad;
+    private String title;
+    private String body;
 }

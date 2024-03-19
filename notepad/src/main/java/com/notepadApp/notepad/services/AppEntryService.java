@@ -1,16 +1,10 @@
 package com.notepadApp.notepad.services;
 
 import com.notepadApp.notepad.data.models.Entry;
-import com.notepadApp.notepad.data.models.NotePad;
 import com.notepadApp.notepad.data.repository.EntryRepository;
-import com.notepadApp.notepad.data.repository.UserRepository;
 import com.notepadApp.notepad.dtos.requests.EntryCreateRequest;
-import com.notepadApp.notepad.dtos.responses.EntryResponse;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -24,5 +18,16 @@ public class AppEntryService implements EntryService{
         entry.setBody(request.getBody());
         Entry savedEntry = entryRepository.save(entry);
         return savedEntry;
+    }
+
+    @Override
+    public Entry delete(EntryCreateRequest request) {
+        Entry entry = findEntry(request.getTitle(), request.getBody());
+        entryRepository.delete(entry);
+        return entry;
+    }
+    @Override
+    public Entry findEntry(String title, String body) {
+        return entryRepository.findEntryByTitleAndBody(title, body);
     }
 }

@@ -20,6 +20,6 @@ public class NotePad {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private boolean isLocked;
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     private List<Entry> entries;
 }

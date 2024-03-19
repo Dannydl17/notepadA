@@ -8,4 +8,7 @@ public interface NotePadService {
     void write(Long notepad, String title, String body);
 
     NotePad findNotepad(Long findNotePadId);
+
+    void delete(Long notepad, String title, String body);
+
 }

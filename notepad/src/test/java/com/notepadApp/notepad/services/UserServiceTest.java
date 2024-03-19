@@ -49,4 +49,26 @@ public class UserServiceTest {
         NotePad notePad = userService.getNotepad(response.getId(), response.getNotepad());
         assertEquals(notePad.getEntries().size(), 1);
     }
+    @Test
+    public void testThatUserCanDeleteTest(){
+        UserRegisterRequest request = new UserRegisterRequest();
+        request.setUsername("Danny");
+        request.setPassword("1234");
+
+        UserRegistrationResponse response = userService.register(request);
+        assertNotNull(response);
+        assertNotNull(response.getId());
+
+        userService.write(response.getId(), response.getNotepad(), "My first day at school", "Body");
+        NotePad notePad = userService.getNotepad(response.getId(), response.getNotepad());
+        assertEquals(notePad.getEntries().size(), 1);
+
+        userService.write(response.getId(), response.getNotepad(), "My first day at church", "Monday");
+        NotePad notePadOne = userService.getNotepad(response.getId(), response.getNotepad());
+        assertEquals(notePadOne.getEntries().size(),2);
+
+        userService.delete(response.getId(), response.getNotepad(), "My first day at church", "Monday");
+        NotePad notePadDeleted = userService.getNotepad(response.getId(), response.getNotepad());
+        assertEquals(notePadDeleted.getEntries().size(),1);
+    }
 }
