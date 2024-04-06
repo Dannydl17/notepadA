@@ -7,13 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="notepad" />
+        <module name="notepadApp" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="notepad" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="notepad" options="-parameters" />
+      <module name="notepad" options="" />
+      <module name="notepadApp" options="-parameters" />
     </option>
   </component>
 </project>

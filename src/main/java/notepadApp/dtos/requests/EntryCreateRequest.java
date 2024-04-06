@@ -9,6 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EntryCreateRequest {
-    private String title;
-    private String body;
+    String title;
+    String body;
 }

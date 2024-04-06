@@ -8,4 +8,5 @@ import lombok.Setter;
 public class UserRegistrationResponse {
     private Long id;
     private Long notepad_id;
+    private String data;
 }

@@ -27,7 +27,12 @@ public class AppNotePadService implements NotePadService{
 
     @Override
     public NotePad findByUserName(String userName) {
-        return notePadRepository.findByUserName(userName);
+        NotePad notePad = notePadRepository.findByUserName(userName);
+//        if (notePad.isPresent()) {
+//            return notePad.get();
+//        }
+//        throw new RuntimeException("NotPad not found");
+        return notePad;
     }
 
     @Override
@@ -57,6 +62,7 @@ public class AppNotePadService implements NotePadService{
         request.setTitle(title);
         request.setBody(body);
         Entry entry = entryService.findEntry(title, body);
+        System.out.println(entry);
         List<Entry> entries = getEntries(notePad, entry);
         entryService.delete(request);
         notePadRepository.save(notePad);

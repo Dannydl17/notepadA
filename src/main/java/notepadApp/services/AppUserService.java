@@ -1,18 +1,24 @@
 package notepadApp.services;
 
 import lombok.AllArgsConstructor;
+import notepadApp.data.models.Entry;
 import notepadApp.data.models.NotePad;
 import notepadApp.data.models.User;
 import notepadApp.data.repository.UserRepository;
+import notepadApp.dtos.requests.EntryCreateRequest;
 import notepadApp.dtos.requests.UserRegisterRequest;
 import notepadApp.dtos.responses.UserRegistrationResponse;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class AppUserService  implements  UserService{
     private final UserRepository userRepository;
     private final NotePadService notePadService;
+    private final EntryService entryService;
+
     @Override
     public UserRegistrationResponse register(UserRegisterRequest request) {
         User user = new User();
@@ -29,16 +35,27 @@ public class AppUserService  implements  UserService{
     }
 
     @Override
-    public NotePad write(String userName, String title, String body) {
-        NotePad notePad1 = notePadService.createNotePad(userName);
-        return notePadService.write(userName, title, body);
+    public User findByUserName(String userName) {
+        User user = userRepository.findByUsername(userName);
+        return user;
     }
 
     @Override
-    public NotePad getNotepad(Long id, Long notepad_id) {
-        User user = findById(id);
-        return notePadService.findNotepad_Id(notepad_id);
+    public NotePad write(String userName, String title, String body) {
+        User user = userRepository.findByUsername(userName);
+        NotePad notePad = user.getNotePad();
+        EntryCreateRequest request = new EntryCreateRequest();
+        request.setTitle(title);
+        request.setBody(body);
+        Entry entry = entryService.createEntry(request);
+        List<Entry> entries = notePad.getEntries();
+        entries.add(entry);
+        notePad.setUserName(userName);
+        notePad.setEntries(entries);
+        userRepository.save(user);
+        return notePad;
     }
+
 
     private User findById(Long id) {
         return userRepository.findById(id).get();

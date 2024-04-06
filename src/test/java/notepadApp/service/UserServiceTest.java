@@ -2,6 +2,7 @@ package notepadApp.service;
 
 import notepadApp.data.models.NotePad;
 import notepadApp.data.repository.UserRepository;
+import notepadApp.dtos.requests.EntryCreateRequest;
 import notepadApp.dtos.requests.UserRegisterRequest;
 import notepadApp.dtos.responses.UserRegistrationResponse;
 import notepadApp.services.AppNotePadService;
@@ -48,13 +49,12 @@ public class UserServiceTest {
         assertNotNull(response);
         assertNotNull(response.getId());
 
-         userService.write("Danny", "My first day at school", "I am in the class-room writing");
-//        System.out.println(notePad.getEntries().size());
-        assertEquals(1, userService.getNotepad(1L,1L).getEntries().size());
+        userService.write("Danny", "My first day at school", "I am in the class-room writing");
+        assertEquals(1,  userService.findByUserName("Danny").getNotePad().getEntries().size());
     }
 
     @Test
-    public void testThatUserCanDeleteTest(){
+    public void testThatUserCanDeleteTest() {
         UserRegisterRequest request = new UserRegisterRequest();
         request.setUsername("Danny");
         request.setPassword("1234");
@@ -64,18 +64,14 @@ public class UserServiceTest {
         assertNotNull(response.getId());
 
 
-//        NotePad notePad = userService.write("Danny", "My first day at school", "I am in the class-room writing");
-//        assertEquals(1, notePad.getEntries().size());
-//        userService.write("Danny", "My first day at school", "I am in the class-room");
-//        assertEquals(2, );
+        userService.write("Danny", "My first day at school", "I am in the class-room writing");
+        assertEquals(1, userService.findByUserName("Danny").getNotePad().getEntries().size());
+        userService.write("Danny", "My second day at school", "I was very late to school");
+        assertEquals(2, userService.findByUserName("Danny").getNotePad().getEntries().size());
+
+        userService.delete(response.getId(),1L, "My second day at school", "I was very late to school");
+        assertEquals(1, userService.findByUserName("Danny").getNotePad().getEntries().size());
 
 
-
-
-//        userService.delete(response.getId(), response.getNotepad(), "My first day at church", "Monday");
-//        NotePad notePadDeleted = userService.getNotepad(response.getId(), response.getNotepad());
-//        assertEquals(notePadDeleted.getEntries().size(),1);
     }
-
-
 }
