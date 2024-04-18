@@ -1,4 +1,4 @@
-package notepadApp;
+package notepadApp.service;
 
 import notepadApp.data.models.Entry;
 import notepadApp.data.repository.EntryRepository;
