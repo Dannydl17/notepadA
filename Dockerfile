@@ -3,5 +3,5 @@ COPY . .
 RUN mvn -B clean package -DskipTests
 FROM openjdk:17
 COPY --from=build ./target/*.jar notepadA.jar
-EXPOSE PORT = 8181
+EXPOSE 8181
 ENTRYPOINT ["java", "-jar", "notepadA.jar"]
