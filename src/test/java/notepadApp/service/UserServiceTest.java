@@ -61,12 +61,12 @@ public class UserServiceTest {
                 .cause();
     }
 
-    @Test
-    @SneakyThrows
-    public void testThatUserCanRegisterSuccessfully_IfAllCheckedArePassed(){
-        UserRegistrationResponse response = userService.register(buildValidUser());
-        assertThat(userService.existsByEmail(response.ge))
-    }
+    // @Test
+    // @SneakyThrows
+    // public void testThatUserCanRegisterSuccessfully_IfAllCheckedArePassed(){
+    //     UserRegistrationResponse response = userService.register(buildValidUser());
+    //     assertThat(userService.existsByEmail(response.ge))
+    // }
 
 
 
