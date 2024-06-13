@@ -3,7 +3,7 @@ name: Deploy Docker Image to EC2
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-deploy:
@@ -24,14 +24,19 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/your-docker-image:latest .
-        docker push ${{ secrets.DOCKER_USERNAME }}/your-docker-image:latest
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/notepadA:latest .
+        docker push ${{ secrets.DOCKER_USERNAME }}/notepadA:latest
 
     - name: Install AWS CLI
       run: |
         sudo apt-get update
         sudo apt-get install -y awscli
 
+    - name: Create SSH key file
+      run: |
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > $GITHUB_WORKSPACE/key.pem
+        chmod 400 $GITHUB_WORKSPACE/key.pem
+        
     - name: Deploy to EC2
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -47,14 +52,12 @@ jobs:
             --instance-ids $INSTANCE_ID \
             --query 'Reservations[0].Instances[0].PublicDnsName' \
             --output text)
+
         echo "Instance $INSTANCE_ID is running at $PUBLIC_DNS"
+
         SSH_COMMANDS="sudo apt-get update -y
                       sudo apt-get install -y docker.io
                       sudo systemctl start docker
-                      sudo usermod -aG docker $INSTANCE_USER
+                      sudo usermod -aG docker ${INSTANCE_USER}
                       sudo systemctl enable docker
-                      echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
-                      docker pull $DOCKER_USERNAME/your-docker-image:latest
-                      docker run -d $DOCKER_USERNAME/your-docker-image:latest"
-        ssh -o StrictHostKeyChecking=no -i $GITHUB_WORKSPACE/${KEY_NAME}.pem $INSTANCE_USER@$PUBLIC_DNS "$SSH_COMMANDS"
-
+                      echo $DOCKER_PASSWORD | sudo docker login --username $DOCKER_USERNAME
